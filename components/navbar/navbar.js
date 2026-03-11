@@ -1,6 +1,5 @@
 /* ============================================================
    ASTRAKSHAYA — NAVBAR JS
-   Full-width dropdown · Scroll shadow · Mobile accordion
    ============================================================ */
 
 (function () {
@@ -9,6 +8,7 @@
   const navbar       = document.getElementById('navbar');
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mobileMenu   = document.getElementById('mobileMenu');
+  const overlay      = document.getElementById('dropOverlay');
   const dropTriggers = document.querySelectorAll('.navbar__item--drop');
   const mobileGroups = document.querySelectorAll('.mobile-group__btn');
 
@@ -32,11 +32,12 @@
     const trigger = document.querySelector(`[data-drop="${key}"] .navbar__trigger`);
     const panel   = getPanel(key);
     const item    = document.querySelector(`[data-drop="${key}"]`);
-
     if (!panel) return;
+
     item.classList.add('is-open');
     panel.classList.add('is-open');
     if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    overlay.classList.add('is-visible');
     activeKey = key;
   }
 
@@ -46,12 +47,14 @@
       const panel   = getPanel(key);
       const item    = document.querySelector(`[data-drop="${key}"]`);
       if (!panel) return;
+
       item.classList.remove('is-open');
       panel.classList.remove('is-open');
       if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      overlay.classList.remove('is-visible');
       if (activeKey === key) activeKey = null;
     };
-    immediate ? run() : (closeTimer = setTimeout(run, 160));
+    immediate ? run() : (closeTimer = setTimeout(run, 80));
   }
 
   dropTriggers.forEach((item) => {
@@ -59,17 +62,14 @@
     const trigger = item.querySelector('.navbar__trigger');
     const panel   = getPanel(key);
 
-    /* Hover on nav item */
     item.addEventListener('mouseenter', () => openDrop(key));
     item.addEventListener('mouseleave', () => closeDrop(key));
 
-    /* Keep open while hovering panel */
     if (panel) {
       panel.addEventListener('mouseenter', () => { clearTimeout(closeTimer); openDrop(key); });
       panel.addEventListener('mouseleave', () => closeDrop(key));
     }
 
-    /* Click toggle */
     if (trigger) {
       trigger.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -77,13 +77,11 @@
       });
     }
 
-    /* Escape */
     item.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeDrop(key, true);
     });
   });
 
-  /* Click outside */
   document.addEventListener('click', (e) => {
     if (!navbar.contains(e.target) && activeKey) closeDrop(activeKey, true);
   });
@@ -128,7 +126,5 @@
       if (sub) sub.classList.toggle('is-open', !expanded);
     });
   });
-
-
 
 })();

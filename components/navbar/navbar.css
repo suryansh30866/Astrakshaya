@@ -1,20 +1,15 @@
 /* ============================================================
-   ASTRAKSHAYA — NAVBAR
-   Shiny black · Full-width dropdown (matches Antigravity)
-   Logo: white PNG, correct size · Pill active state
+   ASTRAKSHAYA — NAVBAR CSS
    ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Shiny black palette */
   --bg:           #0a0a0a;
   --nav-bg:       #0f0f0f;
   --drop-bg:      #141414;
   --border:       rgba(255,255,255,0.09);
   --border-drop:  rgba(255,255,255,0.11);
-
-  /* Text */
   --text:         #f2f2f2;
   --text-nav:     #aaaaaa;
   --text-nav-hov: #ffffff;
@@ -22,21 +17,14 @@
   --text-head:    #e8e8e8;
   --text-sub:     #666666;
   --text-link:    #d0d0d0;
-
-  /* Pill */
   --pill:         rgba(255,255,255,0.08);
   --pill-hover:   rgba(255,255,255,0.12);
   --pill-border:  rgba(255,255,255,0.13);
-
-  /* CTA — white pill */
   --cta-bg:       #ffffff;
   --cta-fg:       #0a0a0a;
   --cta-hover:    #e8e8e8;
-
-  /* Sizes */
   --nav-h:        64px;
   --r-pill:       999px;
-  --r-drop:       0px;          /* Antigravity drops have no border-radius — flat edge */
   --ease:         cubic-bezier(0.2, 0, 0, 1);
   --font:         'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -52,14 +40,13 @@ a  { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; padding: 0; }
 
-/* ── NAVBAR WRAPPER ───────────────────────────────────────── */
+/* ── NAVBAR ───────────────────────────────────────────────── */
 .navbar {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 900;
 }
 
-/* Top bar */
 .navbar__bar {
   height: var(--nav-h);
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
@@ -68,7 +55,6 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   display: flex;
   align-items: center;
   padding: 0 28px;
-  gap: 0;
   transition: box-shadow .3s var(--ease), background .3s var(--ease);
 }
 
@@ -93,26 +79,18 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 }
 .navbar__logo:hover { opacity: .82; }
 
-/*
-  FIX 1 — Logo size: 40×40px so it's clearly visible
-  FIX 2 — Logo color: the PNG has dark lines on white bg.
-           We use brightness(0) invert(1) to make it pure white,
-           then brightness(1.1) to make it crisp.
-*/
 .navbar__logo-img {
   width: 35px;
   height: 35px;
   object-fit: contain;
   display: block;
   filter: brightness(0) invert(1) brightness(1.1);
-  /* No background-color so it stays transparent */
 }
 
 .navbar__logo-text {
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: .01em;
-  /* Metallic silver shimmer */
   background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 55%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -144,7 +122,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   background: transparent;
   border: 1px solid transparent;
   white-space: nowrap;
-  transition: background .18s var(--ease), color .18s var(--ease), border-color .18s;
+  transition: background .1s var(--ease), color .1s var(--ease), border-color .1s;
 }
 .navbar__link:hover,
 .navbar__trigger:hover {
@@ -153,7 +131,6 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   border-color: var(--pill-border);
 }
 
-/* Active open pill */
 .navbar__item--drop.is-open > .navbar__trigger {
   color: var(--text-nav-hov);
   background: var(--pill-hover);
@@ -163,14 +140,14 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 .navbar__chevron {
   color: var(--text-dim);
   flex-shrink: 0;
-  transition: transform .28s var(--ease), color .18s;
+  transition: transform .2s var(--ease), color .1s;
 }
 .navbar__item--drop.is-open > .navbar__trigger .navbar__chevron {
   transform: rotate(180deg);
   color: var(--text-nav);
 }
 
-/* ── RIGHT SLOT ───────────────────────────────────────────── */
+/* ── RIGHT ────────────────────────────────────────────────── */
 .navbar__right {
   display: flex;
   align-items: center;
@@ -179,13 +156,12 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   flex-shrink: 0;
 }
 
-/* CTA icon — join.svg */
+/* ── CTA ICON ─────────────────────────────────────────────── */
 .navbar__cta-icon {
-  width:14px;
-  height:14px;
+  width: 14px;
+  height: 14px;
   display: block;
   flex-shrink: 0;
-  /* Button is white bg, so icon must be dark */
   filter: brightness(0);
 }
 
@@ -238,42 +214,30 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 .navbar__hamburger.is-open span:nth-child(2) { opacity: 0; }
 .navbar__hamburger.is-open span:nth-child(3) { width: 100%; transform: translateY(-6.5px) rotate(-45deg); }
 
-/* ── DROPDOWN — FULL WIDTH ────────────────────────────────── */
-/*
-  FIX 3 — Dropdown is FULL WIDTH of the viewport (matches Antigravity).
-  It sits below the navbar bar, flush left and right.
-  The inner content is max-width constrained and padded.
-*/
+/* ── DROPDOWN ─────────────────────────────────────────────── */
 .dropdown {
   position: absolute;
-  top: 100%;          /* flush below .navbar__bar */
+  top: 100%;
   left: 0;
   right: 0;
   width: 100%;
-
   background: var(--drop-bg);
   border-bottom: 1px solid var(--border-drop);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.05),
     0 20px 60px rgba(0,0,0,0.8),
     0 6px 20px rgba(0,0,0,0.5);
-
-  /* Hidden by default */
   opacity: 0;
   pointer-events: none;
   transform: translateY(-6px);
-  transition:
-    opacity .22s var(--ease),
-    transform .24s var(--ease);
+  transition: opacity .15s var(--ease), transform .15s var(--ease);
 }
-
 .dropdown.is-open {
   opacity: 1;
   pointer-events: all;
   transform: translateY(0);
 }
 
-/* Inner content — matches Antigravity padding & layout */
 .dropdown__inner {
   max-width: 1280px;
   margin: 0 auto;
@@ -283,14 +247,13 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   align-items: flex-start;
 }
 
-/* Left: info text */
 .dropdown__info {
   flex-shrink: 0;
   width: 320px;
 }
 
 .dropdown__headline {
-  font-size: 1.25rem;       /* bigger — matches Antigravity "Built for developers" size */
+  font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.45;
   color: var(--text-head);
@@ -304,7 +267,6 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   margin-bottom: 24px;
 }
 
-/* "See overview" pill — matches reference exactly */
 .dropdown__see-all {
   display: inline-flex;
   align-items: center;
@@ -323,12 +285,10 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   color: var(--text);
 }
 
-/* Right: link list — large and airy, exact Antigravity reference */
 .dropdown__links {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0;
   padding-top: 4px;
 }
 
@@ -349,11 +309,28 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   font-size: 1.2rem;
   font-weight: 300;
   color: var(--text-dim);
-  transition: transform .2s var(--ease), color .15s;
   flex-shrink: 0;
+  transition: transform .2s var(--ease), color .15s;
 }
 .dropdown__link:hover { color: #ffffff; padding-left: 8px; }
 .dropdown__link:hover span { transform: translateX(5px); color: var(--text-nav); }
+
+/* ── BLUR OVERLAY ─────────────────────────────────────────── */
+.dropdown-overlay {
+  position: fixed;
+  inset: 0;
+  top: var(--nav-h);
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 899;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s var(--ease);
+}
+.dropdown-overlay.is-visible {
+  opacity: 1;
+}
 
 /* ── MOBILE MENU ──────────────────────────────────────────── */
 .mobile-menu {
@@ -414,20 +391,16 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 
 /* ── HERO ─────────────────────────────────────────────────── */
 .hero {
-  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 0 24px;
-  background: #0a0a0a;   /* clean flat black — no gradient noise */
-  overflow: hidden;
+  background: #0a0a0a;
 }
 
 .hero__content {
-  position: relative;
-  z-index: 1;
   max-width: 780px;
 }
 
@@ -439,8 +412,6 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   margin-bottom: 32px;
 }
 
-/* Google Antigravity-style hero title:
-   very large, light weight, plain white — NO gradient */
 .hero__title {
   font-size: clamp(2.8rem, 6vw, 5rem);
   font-weight: 300;
